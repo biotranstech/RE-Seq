@@ -51,7 +51,12 @@ The project structure is as follows (core module description) :
 Installation
 -----
 
-### Create and activate Python environment
+### Install Conda (if not already installed) 
+It is recommended to use:
+```
+Miniconda / Anaconda
+```
+### Create Python environment
 
 For RE-Seq, the python version need is over 3.8. If you have installed Python3.6 or Python3.7, consider installing Anaconda, and then you can create a new environment.
 ```
