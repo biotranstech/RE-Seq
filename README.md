@@ -58,21 +58,17 @@ Miniconda / Anaconda
 ```
 ### Create Python environment
 
-For RE-Seq, the python version need is over 3.8. If you have installed Python3.6 or Python3.7, consider installing Anaconda, and then you can create a new environment.
 ```
 conda create -n reseq python=3.9
 conda activate RESeq
 ```
-
-### Install python package
+Install dependencies:
 ```
-conda install Jinja2
-conda install pandas
-conda install matplotlib
+conda install -y pandas matplotlib jinja2
 ```
 
-### Create and activate R environment
-For RE-Seq, the R version need 4.2.3. You can create a YAML file called environment.yml with the following content:
+### Set up the R environment (critical step)
+Create environment.yml:
 ```
 name: r_environment
 channels:
@@ -125,12 +121,13 @@ dependencies:
   - pip:
     - custom-functions
 ```
-Go to the directory containing the environment.yml file and run the following command to create the environment:
+Install:
 ```
 conda env create -f environment.yml
+conda activate r_environment
 ```
 
-### Install other requirements
+### Install bioinformatics software
 ```
 conda install bioconda::fastp
 conda install bioconda::fastqc
@@ -142,8 +139,11 @@ conda install bioconda::tabix
 conda install bioconda::htseq
 ```
 ### Install Annovar
-You can refer to the [Annovar](https://annovar.openbioinformatics.org/en/latest/user-guide/download/) official website to download and install.
-
+Official download： 
+```
+[Annovar](https://annovar.openbioinformatics.org/en/latest/user-guide/download/)
+```
+Then configure the path.
 ### Modify the flow configuration file
 
 When you have completed the installation of the above software (package), you need to modify the "REseq/config.py" file to change the corresponding software path to the path you installed.
