@@ -179,25 +179,45 @@ You can enter a command to get the help message, which contains information abou
 python all.py -h 
 ```
 
-### Example
-You need to edit a "sample.xls" file with four columns of content, the first column is the sample ID, the second column is the absolute path of the sample reads R1 file, the third column is the absolute path of the sample reads R2 file, and the fourth column is the sample grouping information.
-"sample.xls" file example:
-```
-Rop-1   /home/data/jc1/ZQ-176/CG-1_L1_1.fq.gz   /home/data/jc1/ZQ-176/CG-1_L1_2.fq.gz   Rop
-Rop-2   /home/data/jc1/ZQ-176/CG-2_L1_1.fq.gz   /home/data/jc1/ZQ-176/CG-2_L1_2.fq.gz   Rop
-Rop-3   /home/data/jc1/ZQ-176/CG-3_L1_1.fq.gz   /home/data/jc1/ZQ-176/CG-3_L1_2.fq.gz   Rop
-Rop_Dex-1       /home/data/jc1/ZQ-176/EG-1_L1_1.fq.gz   /home/data/jc1/ZQ-176/EG-1_L1_2.fq.gz   Rop_Dex
-Rop_Dex-2       /home/data/jc1/ZQ-176/EG-2_L1_1.fq.gz   /home/data/jc1/ZQ-176/EG-2_L1_2.fq.gz   Rop_Dex
-Rop_Dex-3       /home/data/jc1/ZQ-176/EG-3_L1_1.fq.gz   /home/data/jc1/ZQ-176/EG-3_L1_2.fq.gz   Rop_Dex
-Control-1       /home/data/jc1/ZQ-176/NG-1_L1_1.fq.gz   /home/data/jc1/ZQ-176/NG-1_L1_2.fq.gz   Control
-Control-2       /home/data/jc1/ZQ-176/NG-2_L1_1.fq.gz   /home/data/jc1/ZQ-176/NG-2_L1_2.fq.gz   Control
-Control-3       /home/data/jc1/ZQ-176/NG-3_L1_1.fq.gz   /home/data/jc1/ZQ-176/NG-3_L1_2.fq.gz   Control
-```
-You can then perform RE-Seq analysis with the following command.
-```
-python you_path.all.py --work_dir ./01_work --out_dir ./02_Result -ref rn6 -i sample.xls -cn ZQ-176 -pn "Rattus norvegicus 9 RE-seq"
-```
+### Running Analysis
 
+```
+python all.py \
+  --work_dir ./work \
+  --out_dir ./result \
+  -ref hg38 \
+  -i sample.xls \
+  -cn PROJECT001 \
+  -pn "RNA editing project"
+```
+### Output
+After the operation is completed:
+```
+02_result/
+├── 01_QC
+├── 03_RESeq_file
+└── 04_Down_analysis
+03_report/test_Report
+├── asset
+├── images
+├── Result
+└── report_noAS_v1.2.html
+```
+Directly open:
+```
+report_noAS_v1.2.html
+```
+You can then view the complete analysis report.
+
+### Resume
+If interrupted:
+```
+Just re-run the same command.
+```
+The system will:
+
+✔ Automatically skip completed steps
+✔ Resume from the last checkpoint
 ## Status tracking and restart
 
 The system displays the task progress and whether the task is running successfully. If the workflow interruption needs to be restarted, the system will automatically check the file, skip the completed task, and continue to execute from the breakpoint, improving work efficiency.
