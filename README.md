@@ -1,11 +1,25 @@
-RE-Seq work flow
+RE-Seq: RNA Editing Analysis Workflow
 =====
-## RE-Seq overview
-
+## RE-Seq Overview
+RE-Seq is an automated RNA editing analysis pipeline built with Python DAGflow. It provides a full end-to-end solution from raw RNA-seq data to biological interpretation.
 ### What is RNA editing
 RNA editing is a dynamic post-transcriptional modification with significant implications for gene regulation and disease mechanisms.
-### Introduction
-RE-Seq is an automated workflow for analyzing RNA editing events, written using the python DAGflow package, encompassing data quality control, alignment, acquisition of RNA editing information, multi-level statistical analysis of editing information, multi-level analysis of RNA editing events, relevant visualization analysis, and automatic report generation.
+### Key Features
+1. RNA-seq quality control
+2. Alignment to reference genome
+3. RNA editing detection
+4. Multi-level statistical analysis
+5. Functional enrichment analysis
+6. Publication-ready visualization
+7. Automatic HTML report generation
+### Why Use RE-Seq
+RNA editing analysis is typically complex and fragmented:
+| Problem                 | Traditional Workflow                   |
+| ----------------------- | -------------------------------------- |
+| Multiple tools chaining | fastp + hisat2 + GATK + custom scripts |
+| Poor reproducibility    | Manual operations are error-prone      |
+| Complex pipeline        | Multiple steps and format conversions  |
+| Difficult visualization | Requires additional coding             |
 
 ## Workflow file directory structure
 
