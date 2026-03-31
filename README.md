@@ -22,10 +22,10 @@ RNA editing analysis is typically complex and fragmented:
 | Difficult visualization | Requires additional coding             |
 
 👉 RE-Seq addresses these challenges by:
-🔄 Automating the entire workflow (from FASTQ to final report)
-⚙️ Standardizing analysis steps (minimizing human-induced errors)
-📊 Providing built-in statistical analysis and visualization
-📄 Automatically generating deliverable-ready reports
+1. Automating the entire workflow (from FASTQ to final report)
+2. Standardizing analysis steps (minimizing human-induced errors)
+3. Providing built-in statistical analysis and visualization
+4. Automatically generating deliverable-ready reports
 ## Workflow file directory structure
 
 ```
