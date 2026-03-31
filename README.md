@@ -226,8 +226,37 @@ REseq/config.py
 ```
 2. Reference not configured
 Check:
-1) fasta
-2) index
-## Status tracking and restart
-
-The system displays the task progress and whether the task is running successfully. If the workflow interruption needs to be restarted, the system will automatically check the file, skip the completed task, and continue to execute from the breakpoint, improving work efficiency.
+```
+fasta
+index
+```
+3. Permission issues
+```
+chmod -R 755 your_project
+```
+4. Environment conflicts
+Recommended:
+```
+conda clean -a
+```
+## Workflow Logic (Core Principle)
+Actual RE-Seq workflow:
+```
+FASTQ
+ ↓
+Quality Control (fastp)
+ ↓
+Alignment (hisat2)
+ ↓
+BAM processing
+ ↓
+RNA editing detection
+ ↓
+Filtering & annotation
+ ↓
+Statistical analysis
+ ↓
+Visualization
+ ↓
+HTML report
+```
