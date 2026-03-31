@@ -215,9 +215,19 @@ If interrupted:
 Just re-run the same command.
 ```
 The system will:
+1. Automatically skip completed steps
+2. Resume from the last checkpoint
 
-✔ Automatically skip completed steps
-✔ Resume from the last checkpoint
+### Common Issues
+1. Software path error
+Must modify:
+```
+REseq/config.py
+```
+2. Reference not configured
+Check:
+1) fasta
+2) index
 ## Status tracking and restart
 
 The system displays the task progress and whether the task is running successfully. If the workflow interruption needs to be restarted, the system will automatically check the file, skip the completed task, and continue to execute from the breakpoint, improving work efficiency.
