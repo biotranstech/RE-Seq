@@ -26,8 +26,8 @@ RNA editing analysis is typically complex and fragmented:
 2. Standardizing analysis steps (minimizing human-induced errors)
 3. Providing built-in statistical analysis and visualization
 4. Automatically generating deliverable-ready reports
-## Workflow file directory structure
-
+## Workflow Structure
+The project structure is as follows (core module description) :
 ```
 ├── all.py                    #Workflow Complete process
 ├── dagflow                   #python DAGflow package
