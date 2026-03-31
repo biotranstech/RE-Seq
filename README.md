@@ -20,6 +20,7 @@ RNA editing analysis is typically complex and fragmented:
 | Poor reproducibility    | Manual operations are error-prone      |
 | Complex pipeline        | Multiple steps and format conversions  |
 | Difficult visualization | Requires additional coding             |
+
 👉 RE-Seq addresses these challenges by:
 🔄 Automating the entire workflow (from FASTQ to final report)
 ⚙️ Standardizing analysis steps (minimizing human-induced errors)
