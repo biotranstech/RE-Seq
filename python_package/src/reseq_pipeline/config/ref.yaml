@@ -1,0 +1,27 @@
+#path为基因组hisat2 index 路径
+#fasta为参考基因组路径
+#gtf为参考基因组gtf路径
+#tf为参考基因组基因id文件，包含Symbol，Ensembl，Entrez_ID
+#length为参考基因组基因长度信息
+#name为基因组出具报告名
+hg38:
+  path: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/hg38/hg38
+  fasta: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/hg38/hg38.fa
+  gtf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/hg38/hg38.refGene.gtf
+  tf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/hg38/Homo_sapiens_TF.txt
+  length: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/hg38/hg38_gene.length.txt
+  name: GRCh38(hg38)
+mm10:
+  path: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/mm10
+  fasta: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/mm10.fa
+  gtf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/mm10.refGene.gtf
+  tf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/Mus_musculus_TF.txt
+  length: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/mm10_lengths.txt
+  name: GRCm38(mm10)
+rn6:
+  path: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/rn6/rn6
+  fasta: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/rn6/rn6.fa
+  gtf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/rn6/rn6.refGene.gtf
+  tf: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/mm10/Mus_musculus_TF.txt
+  length: /mnt/sda/project/yjc1/pipeline/01_RE-seq/Refer/rn6/rn6_gene.length.txt
+  name: RN6

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reseq-pipeline"
+version = "1.1.0"
+description = "RNA editing analysis pipeline packaged as a Python CLI"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "jinja2",
+  "docxtpl",
+  "PyYAML",
+]
+
+[project.scripts]
+reseq = "reseq_pipeline.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+reseq_pipeline = [
+  "config/*.yaml",
+  "scripts/*",
+  "scripts/template/**/*",
+  "modules/dagflow/*.py",
+]

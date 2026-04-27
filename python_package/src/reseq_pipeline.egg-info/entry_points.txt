@@ -1,0 +1,2 @@
+[console_scripts]
+reseq = reseq_pipeline.cli:main

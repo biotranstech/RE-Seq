@@ -1,0 +1,2 @@
+recursive-include src/reseq_pipeline/config *
+recursive-include src/reseq_pipeline/scripts *

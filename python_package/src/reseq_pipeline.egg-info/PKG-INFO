@@ -1,0 +1,209 @@
+Metadata-Version: 2.4
+Name: reseq-pipeline
+Version: 1.1.0
+Summary: RNA editing analysis pipeline packaged as a Python CLI
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: jinja2
+Requires-Dist: docxtpl
+Requires-Dist: PyYAML
+
+# reseq-pipeline
+
+可安装、可检查、可直接在服务器部署的 RE-seq Python 包版本。
+
+## 安装
+
+建议在 Linux / macOS 的 Python 3.9+ 环境中安装：
+
+```bash
+pip install .
+```
+
+安装后会得到命令：
+
+```bash
+reseq
+```
+
+## Python 依赖包
+
+根据当前压缩包内的 `src/reseq_pipeline/*.py`、`src/reseq_pipeline/modules/*.py`、`src/reseq_pipeline/scripts/*.py` 实际 import 情况，
+这个项目运行时涉及的 **Python 第三方包** 如下。
+
+### 核心必需
+
+```bash
+pip install jinja2 docxtpl PyYAML pandas matplotlib
+```
+
+对应说明：
+
+- `jinja2`：报告模板渲染
+- `docxtpl`：Word 模板报告生成
+- `PyYAML`：读取 `ref.yaml`
+- `pandas`：部分脚本做表格合并与统计（如 `Reads.py`、`merge_sample.py`）
+- `matplotlib`：`plot_fastqc.py` 绘图
+
+### 标准库（无需安装）
+
+以下模块已由 Python 自带，无需额外安装：
+
+- `argparse`
+- `collections`
+- `configparser`
+- `dataclasses`
+- `glob`
+- `importlib`
+- `json`
+- `logging`
+- `os`
+- `pathlib`
+- `re`
+- `shutil`
+- `signal`
+- `subprocess`
+- `sys`
+- `time`
+- `typing`
+- `zipfile`
+
+## R 依赖包
+
+
+### 建议安装的全部 R 包
+
+```r
+install.packages(c(
+  "stringr", "ggplot2", "dplyr", "reshape2", "corrplot", "factoextra",
+  "ggcorrplot", "glue", "data.table", "patchwork", "limma", "tidyverse",
+  "coin", "ggpubr", "ggExtra", "ggrepel", "ggvenn", "VennDiagram",
+  "pheatmap", "cowplot"
+))
+```
+
+### Bioconductor 包
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+BiocManager::install(c(
+  "DESeq2", "clusterProfiler", "enrichplot", "pathview",
+  "org.Hs.eg.db", "org.Mm.eg.db", "org.Rn.eg.db"
+))
+```
+
+### 一键安装示例
+
+```r
+install.packages(c(
+  "stringr", "ggplot2", "dplyr", "reshape2", "corrplot", "factoextra",
+  "ggcorrplot", "glue", "data.table", "patchwork", "limma", "tidyverse",
+  "coin", "ggpubr", "ggExtra", "ggrepel", "ggvenn", "VennDiagram",
+  "pheatmap", "cowplot"
+))
+
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+BiocManager::install(c(
+  "DESeq2", "clusterProfiler", "enrichplot", "pathview",
+  "org.Hs.eg.db", "org.Mm.eg.db", "org.Rn.eg.db"
+))
+```
+
+### 各 R 脚本对应包
+
+
+## 先做环境检查
+
+```bash
+reseq check
+```
+
+会检查这些常用依赖(第三方软件)是否可用：
+
+- `python`
+- `fastp`
+- `fastqc`
+- `hisat2`
+- `samtools`
+- `htseq-count`
+- `gatk`
+- `perl`
+- `Rscript`
+- `bgzip`
+- `tabix`
+- `annovar`
+- `java`
+
+## 运行
+
+兼容两种写法。
+
+### 写法 1：显式子命令
+
+```bash
+reseq run -i samples.tsv -o result_dir -g hg38 -cn CONTRACT001 -pn ProjectName
+```
+
+### 写法 2：兼容旧习惯
+
+```bash
+reseq -i samples.tsv -o result_dir -g hg38 -cn CONTRACT001 -pn ProjectName
+```
+
+## 常用参数
+
+```bash
+reseq run   -i samples.tsv   -o result_dir   -r /path/to/ref.yaml   -g hg38   --thread 8   --concurrent 4   --job-type local   --work-dir ./work   -cn CONTRACT001   -pn DemoProject
+```
+
+## 外部工具路径配置
+
+默认会从 `PATH` 中找工具；找不到时，可以提前导出环境变量：
+
+```bash
+export PYTHON_BIN=/path/to/python
+export FASTP_BIN=/path/to/fastp
+export FASTQC_BIN=/path/to/fastqc
+export HISAT2_BIN=/path/to/hisat2
+export SAMTOOLS_BIN=/path/to/samtools
+export HTSEQ=/path/to/htseq-count
+export GATK_BIN=/path/to/gatk
+export PERL_BIN=/path/to/perl
+export RSCRIPT=/path/to/Rscript
+export BGZIP=/path/to/bgzip
+export TABIX=/path/to/tabix
+export ANNOVAR_BIN=/path/to/annovar
+export JAVA_BIN=/path/to/java
+```
+
+## 参考配置
+
+默认参考文件位于：
+
+```text
+reseq_pipeline/config/ref.yaml
+```
+
+也可以通过 `-r/--ref-yaml` 指定你自己的版本。
+
+## 上线建议
+
+正式部署前建议这样做：
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install .
+reseq check
+reseq --version
+```
+
+## 当前仍需注意
+
+- 参考基因组索引
+- 注释库
+- annovar 数据目录
+- R / Perl 脚本运行环境
+- 输入样本表格式
+
+如果你们服务器上的路径规范和原始流程差异很大，建议根据实际环境改一版 `ref.yaml` 和启动脚本。

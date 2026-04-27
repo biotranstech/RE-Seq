@@ -1,0 +1,168 @@
+/*---------------------------------------
+  主体样式
+-----------------------------------------*/
+:root {
+    --white-color: #ffffff;
+    --primary-color: lightblue;
+    --secondary-color: #79ffff;
+    --about-bg-color: #f0f8ff;
+    --dark-color: #000000;
+    --p-color: #717275;
+    --border-color: #7fffd4;
+    --link-hover-color: #B22727;
+
+    --body-font-family: 'Times New Roman', 'Unbounded', cursive;
+
+    --h1-font-size: 74px;
+    --h2-font-size: 46px;
+    --h3-font-size: 32px;
+    --h4-font-size: 28px;
+    --h5-font-size: 24px;
+    --h6-font-size: 22px;
+    --p-font-size: 20px;
+    --btn-font-size: 16px;
+    --copyright-font-size: 14px;
+
+    --border-radius-large: 100px;
+    --border-radius-medium: 20px;
+    --border-radius-small: 10px;
+
+    --font-weight-thin: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+}
+
+body {
+    background-color: var(--white-color);
+/*--    font-family: var(--body-font-family);  --*/
+    font-family: "Microsoft YaHei","Î¢ÈíÑÅºÚ","ÑÅºÚËÎÌå","ÐÂËÎÌå","ËÎÌå","Microsoft JhengHei","»ªÎÄÏ¸ºÚ",STHeiti,MingLiu;
+    text-align: justify;
+}
+
+
+/*---------------------------------------
+  字体样式
+-----------------------------------------*/
+yw {
+    font-family: "Times New Roman";
+}
+
+h2, h3, h4, h5, h6 {
+    color: var(--dark-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+}
+
+h1 {
+    font-size: var(--h1-font-size);
+}
+
+h2 {
+    font-size: var(--h2-font-size);
+}
+
+h3 {
+    font-size: var(--h3-font-size);
+}
+
+h4 {
+    font-size: var(--h4-font-size);
+}
+
+h5 {
+    font-size: var(--h5-font-size);
+}
+
+h6 {
+    font-size: var(--h6-font-size);
+}
+
+p {
+    color: var(--p-color);
+    font-size: var(--p-font-size);
+    font-weight: var(--font-weight-light);
+    word-wrap: break-word;
+}
+
+ul li {
+    color: var(--p-color);
+    font-size: var(--p-font-size);
+    font-weight: var(--font-weight-light);
+}
+
+a, button {
+    touch-action: manipulation;
+    transition: all 0.3s;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+b, strong {
+    font-weight: var(--font-weight-bold);
+}
+
+/*---------------------------------------
+  响应式
+-----------------------------------------*/
+@media screen and (max-width: 1200px) {
+    h1 {
+        font-size: 62px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    h1 {
+        font-size: 54px;
+    }
+
+    h2 {
+        font-size: 36px;
+    }
+
+    h3 {
+        font-size: 32px;
+    }
+
+    h4 {
+        font-size: 28px;
+    }
+
+    h5 {
+        font-size: 20px;
+    }
+
+    h6 {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 38px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 26px;
+    }
+
+    h4 {
+        font-size: 22px;
+    }
+
+    h5 {
+        font-size: 20px;
+    }
+}

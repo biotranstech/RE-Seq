@@ -1,0 +1,141 @@
+#Rscript - group deseq_method workdir 
+#args1	group: Rop_Dex_vs_Control
+#args2	deseq_method: Limma or DESeq2 or Permutation
+#args3	work_dir: /home/data/jc1/Project/01_ZQ-176/02_Result/04_Down_analysis/04_locr_f/05_Enrich_R/Rop_Dex_vs_Control/R_Enrichment
+library(ggplot2)
+library(cowplot)
+
+args=commandArgs(TRUE)
+
+go_cc_up_file = paste0(args[3],"/",args[1],"_",args[2],"_Up_CC.xls")
+go_bp_up_file = paste0(args[3],"/",args[1],"_",args[2],"_Up_BP.xls")
+go_mf_up_file = paste0(args[3],"/",args[1],"_",args[2],"_Up_MF.xls")
+kk_up_file = paste0(args[3],"/",args[1],"_",args[2],"_Up_KK.xls")
+
+go_cc_down_file = paste0(args[3],"/",args[1],"_",args[2],"_Down_CC.xls")
+go_bp_down_file = paste0(args[3],"/",args[1],"_",args[2],"_Down_BP.xls")
+go_mf_down_file = paste0(args[3],"/",args[1],"_",args[2],"_Down_MF.xls")
+kk_down_file = paste0(args[3],"/",args[1],"_",args[2],"_Down_KK.xls")
+
+go_cc_up = read.table(go_cc_up_file, header = T, sep = "\t")
+go_bp_up = read.table(go_bp_up_file, header = T, sep = "\t")
+go_mf_up = read.table(go_mf_up_file, header = T, sep = "\t")
+kk_up = read.table(kk_up_file, header = T, sep = "\t")
+go_cc_down = read.table(go_cc_down_file, header = T, sep = "\t")
+go_bp_down = read.table(go_bp_down_file, header = T, sep = "\t")
+go_mf_down = read.table(go_mf_down_file, header = T, sep = "\t")
+kk_down = read.table(kk_down_file, header = T, sep = "\t")
+
+go_bp_up$Type = "GO_BP"
+go_cc_up$Type = "GO_CC"
+go_mf_up$Type = "GO_MF"
+kk_up$Type = "KEGG"
+colnames(kk_up)[8] = "geneID"
+go_bp_down$Type = "GO_BP"
+go_cc_down$Type = "GO_CC"
+go_mf_down$Type = "GO_MF"
+kk_down$Type = "KEGG"
+colnames(kk_down)[8] = "geneID"
+
+get_top <- function(input_data)
+{
+	if(nrow(input_data)>10) {
+		out_data <- head(input_data, n=10)
+	}else{
+		out_data = input_data
+	}
+	return(out_data)
+}
+
+go_bp_up_top = get_top(input_data = go_bp_up)
+go_cc_up_top = get_top(input_data = go_cc_up)
+go_mf_up_top = get_top(input_data = go_mf_up)
+kk_up_top = get_top(input_data = kk_up)
+go_bp_down_top = get_top(input_data = go_bp_down)
+go_cc_down_top = get_top(input_data = go_cc_down)
+go_mf_down_top = get_top(input_data = go_mf_down)
+kk_down_top = get_top(input_data = kk_down)
+
+up_all = rbind(go_bp_up_top, go_cc_up_top, go_mf_up_top, kk_up_top)
+down_all = rbind(go_bp_down_top, go_cc_down_top, go_mf_down_top, kk_down_top)
+
+up_all$logPValue = -log(up_all$pvalue)
+down_all$logPValue = log(down_all$pvalue)
+
+for(ii in 1:nrow(up_all)){
+  description_splite=strsplit(as.character(up_all$Description[ii]),split = " ")
+  if (length(description_splite[[1]]) <= 3){
+    description_collapse=paste0(description_splite[[1]],collapse = " ")
+  }else{
+    line_work = c(description_splite[[1]][1:2],"...",tail(description_splite[[1]],1))
+    description_collapse=paste0(line_work,collapse = " ")
+  }
+  up_all$Description[ii]=description_collapse
+  up_all$Description=gsub(pattern = "NA","",up_all$Description)
+}
+
+for(ii in 1:nrow(down_all)){
+  description_splite=strsplit(as.character(down_all$Description[ii]),split = " ")
+  if (length(description_splite[[1]]) <= 3){
+    description_collapse=paste0(description_splite[[1]],collapse = " ")
+  }else{
+    line_work = c(description_splite[[1]][1:2],"...",tail(description_splite[[1]],1))
+    description_collapse=paste0(line_work,collapse = " ")
+  }
+  down_all$Description[ii]=description_collapse
+  down_all$Description=gsub(pattern = "NA","",down_all$Description)
+}
+up_all$Description=make.unique(as.character(up_all$Description))
+down_all$Description=make.unique(as.character(down_all$Description))
+
+up_all$Description = as.factor(up_all$Description)
+order_level = up_all$Description
+up_all$Description = factor(up_all$Description, levels = order_level)
+p1 = ggplot(data=up_all, aes(x=Description,y=logPValue, fill=Type)) + #横纵轴取值
+  geom_bar(stat="identity", width=0.8) + #柱状图的宽度，可以自己设置
+  scale_y_continuous(limits = c(0,35),breaks = seq(0,35,5))+
+  coord_flip() + ##这一步是让柱状图横过来，不加的话柱状图是竖着的
+  geom_text(aes(label = Description, hjust = "left"),size=3) +
+  geom_text(aes(x = Description, y = -1, label = Count),size = 3) +
+  xlab("") +
+  ylab("-logPValue") +
+  #labs(title = "",fill = "Type",color="Type")+
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border = element_blank(),
+        legend.title = element_blank(),
+        axis.text = element_text(color="black"),
+        axis.line.x = element_line(color='black'),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = 'top',
+        legend.key.size = unit(6, "pt"))
+
+down_all$Description = as.factor(down_all$Description)
+order_level = down_all$Description
+down_all$Description = factor(down_all$Description, levels = order_level)
+p2 = ggplot(data=down_all, aes(x=Description,y=logPValue, fill=Type)) + #横纵轴取值
+  geom_bar(stat="identity", width=0.8) + #柱状图的宽度，可以自己设置
+  scale_y_continuous(limits = c(-35,0),breaks = seq(-35,0,5))+
+  coord_flip() + ##这一步是让柱状图横过来，不加的话柱状图是竖着的
+  geom_text(aes(label = Description, hjust = "right"),size=3) +
+  geom_text(aes(x = Description, y = 1, label = Count),size = 3) +
+  xlab("") +
+  ylab("logPValue") +
+  #labs(title = "",fill = "Type",color="Type")+
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border = element_blank(),
+        legend.title = element_blank(),
+        axis.text = element_text(color="black"),
+        axis.line.x = element_line(color='black'),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = 'none')
+
+p3 = plot_grid(p2,p1)
+
+ggsave(p3,file = paste0(args[3],"/",args[1],"_",args[2],".Enrichment.pdf"), units = "cm",height = 16,width = 30,dpi = 300)
+ggsave(p3,file = paste0(args[3],"/",args[1],"_",args[2],".Enrichment.png"), units = "cm",height = 16,width = 30,dpi = 300)
